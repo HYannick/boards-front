@@ -1,0 +1,21 @@
+.form__input {
+  width: 100%;
+  margin-bottom: 1rem;
+  position: relative;
+  input, textarea {
+    border: 0.2rem solid $color--dark;
+    font-size: 1.6rem;
+    padding: 1rem;
+    outline: $color--dark;
+    transition: border 0.3s;
+    &.has-error {
+      border: 0.2rem solid $color--red-2;
+    }
+  }
+  input[type="text"], textarea {
+    width: 100%;
+  }
+  span {
+    color: $color--red-2;
+  }
+}

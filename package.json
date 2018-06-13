@@ -1,0 +1,39 @@
+{
+  "name": "boards-sheep",
+  "version": "1.0.0",
+  "description": "Indie comics for everyone",
+  "author": "Yannick Houssin <y.houssin@live.fr>",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt --port=4040",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.1",
+    "@nuxtjs/proxy": "^1.2.4",
+    "animejs": "^2.2.0",
+    "charming": "^2.2.3",
+    "cookieparser": "^0.1.0",
+    "element-ui": "^2.3.9",
+    "imagesloaded": "^4.1.4",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.10",
+    "nuxt": "^1.0.0",
+    "nuxt-sass-resources-loader": "^2.0.0",
+    "rellax": "^1.6.2",
+    "vee-validate": "^2.0.9"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-vue": "^4.0.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1"
+  }
+}

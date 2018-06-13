@@ -1,0 +1,100 @@
+// Global typography
+$font-name--heading: 'Outrun';
+$font-family--heading: $font-name--heading, Arial, sans-serif;
+$font-name--main: 'SF_Comic';
+$font-name--main-shaded: 'SF_Comic-shaded';
+$font-name--main-outlined: 'SF_Comic-outlined';
+$font-name--body: 'Oswald', sans-serif;
+$font-family--main: $font-name--main, Arial, sans-serif;
+$font-family--main-shaded: $font-name--main-shaded, Arial, sans-serif;
+$font-family--main-outlined: $font-name--main-outlined, Arial, sans-serif;
+
+@include fontFace($font-name--heading, 'Outrun_future.otf')
+@include fontFace($font-name--main, 'SF Comic Script.ttf')
+@include fontFace($font-name--main-outlined, 'SF Comic Script Outline.ttf')
+@include fontFace($font-name--main-shaded , 'SF Comic Script Shaded.ttf')
+// headings
+
+%heading1 {
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1.15;
+  letter-spacing: -0.25rem;
+
+  @include breakpoint($xs) {
+    font-size: 3.4rem;
+  }
+
+  @include breakpoint($md) {
+    font-size: 4rem;
+  }
+}
+
+%heading1--secondary {
+  font-weight: 900;
+  font-size: 2rem;
+  font-family: $font-family--heading;
+  line-height: 1.85;
+  letter-spacing: -0.25rem;
+  text-transform: uppercase;
+
+  @include breakpoint($xs) {
+    font-size: 3rem;
+  }
+
+  @include breakpoint($md) {
+    font-size: 3.5rem;
+  }
+}
+
+%heading2 {
+  font-weight: 700;
+  font-size: 2.2rem;
+  line-height: 1.44;
+  letter-spacing: -0.2rem;
+  @include breakpoint($xs) {
+    font-size: 2.6rem;
+  }
+  @include breakpoint($md) {
+    font-size: 3.2rem;
+  }
+}
+
+%heading3 {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.3;
+  @include breakpoint($xs) {
+    font-size: 2.2rem;
+  }
+  @include breakpoint($md) {
+    font-size: 2.8rem;
+  }
+}
+
+%heading4 {
+  font-size: 1.8rem;
+  line-height: 1.42;
+  font-weight: 700;
+  @include breakpoint($xs) {
+    font-size: 2rem;
+  }
+  @include breakpoint($md) {
+    font-size: 2.4rem;
+  }
+}
+
+%heading5 {
+  @extend %heading4;
+  font-weight: 400;
+}
+
+%heading6 {
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.02rem;
+  color: $color--font;
+  @include breakpoint($xs) {
+    font-size: 1.6rem;
+  }
+}

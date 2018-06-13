@@ -1,0 +1,35 @@
+@import "abstracts/abstract";
+
+
+@import "abstracts/modules/buttons";
+@import "abstracts/modules/form";
+a {
+  text-decoration: none;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  //background: url('/static/b__background.jpg') center center no-repeat fixed;
+  background-size: cover;
+  font-size: 1.4em;
+  font-family: $font-name--body;
+  transition: opacity 0.3s;
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0.96;
+    z-index: -1;
+    background: $color--light;
+  }
+}
+
+.container {
+  max-width: 114rem;
+  width: 100%;
+  margin: 0 auto;
+}

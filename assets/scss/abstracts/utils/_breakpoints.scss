@@ -1,0 +1,41 @@
+// Breakpoints
+
+/* Small mobile
+*  0 to 359px       @include breakpoint($xxs, down)
+*/
+
+/* Mobile
+*  360 to 599px     @include breakpoint($xxs, only) or
+*  >=360px          @include breakpoint($xxs)
+*/
+$xxs: 360px !default;
+
+/* Small tablet (or Portrait)
+*  600 to 839px     @include breakpoint(xs, only) or
+*  >=600px          @include breakpoint($xs)
+*/
+$xs: 600px !default;
+
+/* Medium Tablet (or Landscape)
+*  840 to 959px     @include breakpoint(sm, only) or
+*  >=840px          @include breakpoint(sm)
+*/
+$sm: 840px !default;
+
+/* Small Desktop
+*  960 to 1279px    @include breakpoint(md, only) or
+*  >= 960px         @include breakpoint(md)
+*/
+$md: 960px !default;
+
+/* Desktop
+*  1280 to 1919px   @include breakpoint(lg, only) or
+*  >= 1280px        @include breakpoint(lg)
+*/
+$lg: 1280px !default;
+
+/* Wide screen
+*  >= 1920px        @include breakpoint(xl, only) or
+*  >= 1920px        @include breakpoint(xl)
+*/
+$xl: 1920px !default;
