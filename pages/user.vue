@@ -15,12 +15,12 @@
         <div class="user-profile__avatar">
           <svg class="avatar-svg" width="0" height="0">
             <clipPath id="clip-avatar" clipPathUnits="objectBoundingBox">
-              <path d="M0 .825L.875.681.63.883 0 1V.825zM0 0l1 .092-.108.541L0 .771V0z" fill="#f5d281"/>
+              <path d="M0 .057L1 0 .804 1 .103.767 0 .057z" fill="#383434"/>
             </clipPath>
           </svg>
-          <div data-rellax-speed="1" class="avatar__img rellax">
-            <img src="/avatar__mock.jpg"/>
+          <div data-rellax-speed="1" class="avatar__img rellax" :style="{backgroundImage: `url(${avatarUrl})`}">
           </div>
+          <h1>{{userInfos.username}}</h1>
         </div>
       </el-col>
     </el-row>
@@ -44,21 +44,31 @@
 </template>
 <script>
   import Rellax from 'rellax'
+  import { mapState } from 'vuex'
   export default {
+    middleware: 'authenticated',
     mounted() {
       this.$nextTick(() => {
         const rellax = new Rellax('.rellax')
         rellax.refresh()
       })
     },
-    methods: {
-      svgScale(w, h) {
-        return `scale(${1 / w} ${1 / h})`
+
+    computed: {
+      ...mapState('auth', ['userInfos']),
+      avatarUrl() {
+        return `https://s3.eu-west-3.amazonaws.com/boards-bucket/${this.userInfos.profile_img}`
       }
-    }
+    },
   }
 </script>
 <style lang="scss">
+  .profile__title {
+    font-family: $font-family--main-outlined;
+    font-size: 2.5rem;
+    color: $color--dark;
+    margin-bottom: 3rem;
+  }
   .user-profile {
     margin-top: $header-offset;
   }
@@ -104,6 +114,7 @@
       -webkit-clip-path: url("#clip-cover");
       clip-path: url("#clip-cover");
       position: relative;
+      overflow: hidden;
       height: 35rem;
       display: flex;
       align-items: flex-start;
@@ -130,10 +141,22 @@
     bottom: -5rem;
     left: 0;
     cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    h1 {
+      margin-top: 5rem;
+      color: $color--light;
+      font-family: $font-family--main;
+      font-size: 6rem;
+    }
     .avatar__img {
       -webkit-clip-path: url("#clip-avatar");
       clip-path: url("#clip-avatar");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
       position: relative;
+      overflow: hidden;
       width: 15rem;
       height: 25rem;
       &:hover {

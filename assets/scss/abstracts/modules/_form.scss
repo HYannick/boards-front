@@ -1,6 +1,6 @@
 .form__input {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   position: relative;
   input, textarea {
     border: 0.2rem solid $color--dark;
@@ -8,14 +8,16 @@
     padding: 1rem;
     outline: $color--dark;
     transition: border 0.3s;
-    &.has-error {
-      border: 0.2rem solid $color--red-2;
-    }
-  }
-  input[type="text"], textarea {
+    border-radius: 0;
     width: 100%;
-  }
-  span {
-    color: $color--red-2;
+    &.is-error {
+      border-color: $color--red-2;
+    }
+    &:hover {
+      border-color: $color--yellow;
+    }
+    &:focus {
+      border-color: $color--blue;
+    }
   }
 }

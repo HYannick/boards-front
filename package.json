@@ -24,8 +24,7 @@
     "lodash": "^4.17.10",
     "nuxt": "^1.0.0",
     "nuxt-sass-resources-loader": "^2.0.0",
-    "rellax": "^1.6.2",
-    "vee-validate": "^2.0.9"
+    "rellax": "^1.6.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

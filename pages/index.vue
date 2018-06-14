@@ -17,11 +17,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.container {
-  max-width: 136.6rem;
-  margin: 0 auto;
-  min-height: 100vh;
-}
-</style>

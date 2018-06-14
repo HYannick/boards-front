@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import CookieParser from 'cookieparser'
 import auth from './modules/auth'
+import user from './modules/user'
 const createStore = () => {
   return new Vuex.Store({
     actions: {
@@ -15,9 +16,10 @@ const createStore = () => {
               username: user.username,
               email: user.email,
               admin: user.is_admin,
-              verified: user.is_verified
+              verified: user.is_verified,
+              bio: user.bio,
+              profile_img: user.profile_img
             }
-
             commit('auth/updateAuthStatus', userInfos)
           } catch (e) {
             commit('auth/logout')
@@ -27,7 +29,8 @@ const createStore = () => {
       }
     },
     modules: {
-      auth
+      auth,
+      user
     }
   })
 }

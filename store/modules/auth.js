@@ -7,9 +7,13 @@ const state = {
 }
 
 const mutations = {
+  updateUser(state, data) {
+    Object.assign(state.userInfos, data)
+    console.log(state.userInfos)
+  },
   updateAuthStatus(state, data) {
     state.isLogged = true
-    state.userInfos = data.userInfos
+    state.userInfos = data
   },
 
   logout(state) {
@@ -19,11 +23,17 @@ const mutations = {
 
 const actions = {
   async register({commit}, payload) {
+    const {username, email, pass} = payload
+    const userData = {
+      username,
+      email,
+      password: pass
+    }
     try {
-      await this.$axios.$post('http://localhost:5000/api/v1/register', payload)
+      await this.$axios.$post('http://localhost:5000/api/v1/register', userData)
       this.app.router.push('/')
       return {
-        title: `Welcome ${payload.username}`,
+        title: `Welcome ${userData.username}`,
         message: `We sent you an email confirmation. Please check it :)`,
         type: 'success'
       }
@@ -72,7 +82,6 @@ const actions = {
   async logout({commit}) {
     try {
       Cookie.remove('authToken')
-      console.log('lol')
       commit('logout')
     } catch (e) {
       return {

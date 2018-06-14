@@ -33,8 +33,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui',
-    '@/plugins/vee-validate'
+    '@/plugins/element-ui'
   ],
   modules: [
     // provide path to the file with resources
@@ -49,6 +48,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor:[ 'rellax' ],
     /*
     ** Run ESLint on save
     */

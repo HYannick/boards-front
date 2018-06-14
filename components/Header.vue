@@ -60,6 +60,7 @@
 <style lang="scss">
   .b-header {
     position: fixed;
+    background: transparentize($color--light, 0.5);
     z-index: 999;
     top: 0;
     left: 0;

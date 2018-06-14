@@ -17,79 +17,54 @@
           <div class="b-auth-tab__wrapper">
             <transition name="fade">
               <div class="b-auth-tab__item" v-if="currentTab === 'login'" key="loginKey">
-                <form class="b-auth-tab__form" @submit.prevent="submitLogin()">
-                  <div class="form__input">
-                    <input
-                      v-validate="'required|email'"
-                      :class="{'has-error': errors.has('email')}"
-                      name="email"
+                <el-form :model="login_form" :rules="rules" ref="login_form" class="b-auth-tab__form">
+                  <el-form-item class="form__input" prop="email">
+                    <el-input
                       type="email"
                       placeholder="Your email"
-                      v-model="login_form.email"/>
-                    <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
-
-                  </div>
-                  <div class="form__input">
-                    <input
-                      v-validate="'required|min:3'"
-                      :class="{'has-error': errors.has('password')}"
-                      name="password"
+                      v-model="login_form.email"></el-input>
+                  </el-form-item>
+                  <el-form-item class="form__input" prop="password">
+                    <el-input
                       type="password"
                       placeholder="Your password"
-                      v-model="login_form.password"/>
-                    <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
-                  </div>
+                      v-model="login_form.password"></el-input>
+                  </el-form-item>
                   <div class="form__input">
-                    <button type="submit" class="b-btn">Login</button>
+                    <button type="submit" @click.prevent="submitLogin()" class="b-btn">Login</button>
                   </div>
-                </form>
+                </el-form>
               </div>
               <div class="b-auth-tab__item" v-else key="registerKey">
-                <form class="b-auth-tab__form" @submit.prevent="submitRegister">
-                  <div class="form__input">
-                    <input
-                      v-validate="'required|min:3'"
-                      :class="{'has-error': errors.has('username')}"
-                      name="username"
+                <el-form class="b-auth-tab__form" :model="register_form" :rules="rules" ref="register_form">
+                  <el-form-item class="form__input" prop="username">
+                    <el-input
                       type="text"
                       placeholder="Your username"
-                      v-model="register_form.username"/>
-                    <span v-show="errors.has('username')">{{ errors.first('username') }}</span>
-                  </div>
-                  <div class="form__input">
-                    <input
-                      v-validate="'required|email'"
-                      :class="{'has-error': errors.has('email')}"
-                      name="email"
+                      v-model="register_form.username"></el-input>
+                  </el-form-item>
+                  <el-form-item class="form__input" prop="email">
+                    <el-input
                       type="email"
                       placeholder="Your email"
-                      v-model="register_form.email"/>
-                    <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
-                  </div>
-                  <div class="form__input">
-                    <input
-                      v-validate="'required|min:3|confirmed:password_confirmation'"
-                      :class="{'has-error': errors.has('password')}"
-                      name="password"
+                      v-model="register_form.email"></el-input>
+                  </el-form-item>
+                  <el-form-item class="form__input" prop="pass">
+                    <el-input
                       type="password"
                       placeholder="Your password"
-                      v-model="register_form.password"/>
-                    <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
-                  </div>
-                  <div class="form__input">
-                    <input
-                      v-validate="'required'"
-                      :class="{'has-error': errors.has('confirm_password')}"
-                      name="password_confirmation"
+                      v-model="register_form.pass"></el-input>
+                  </el-form-item>
+                  <el-form-item class="form__input" prop="pass_confirmation">
+                    <el-input
                       type="password"
                       placeholder="Password, Again"
-                      v-model="register_form.password_confirmation"/>
-                    <span v-show="errors.has('confirm_password')">{{ errors.first('confirm_password') }}</span>
-                  </div>
+                      v-model="register_form.pass_confirmation"></el-input>
+                  </el-form-item>
                   <div class="form__input">
-                    <button type="submit" class="b-btn">Register</button>
+                    <button type="submit" class="b-btn" @click.prevent="submitRegister()">Register</button>
                   </div>
-                </form>
+                </el-form>
               </div>
             </transition>
           </div>
@@ -119,23 +94,64 @@
 <script>
   import {mapMutations, mapActions} from 'vuex'
   import MouseMove from '@/assets/js/MouseMove'
+
   export default {
     middleware: 'notAuthenticated',
     transition: {
       name: 'scale',
     },
     data() {
+      const validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the password'));
+        } else {
+          if (this.register_form.pass_confirmation !== '') {
+            this.$refs.register_form.validateField('pass_confirmation');
+          }
+          callback();
+        }
+      };
+      const validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the password again'));
+        } else if (value !== this.register_form.pass) {
+          callback(new Error('Two inputs don\'t match!'));
+        } else {
+          callback();
+        }
+      };
       return {
         currentTab: '',
         login_form: {
-          username: '',
-          email: ''
+          email: '',
+          password: ''
         },
         register_form: {
           username: '',
           email: '',
-          password: '',
-          password_confirmation: ''
+          pass: '',
+          pass_confirmation: ''
+        },
+        rules: {
+          username: [
+            {required: true, message: 'Please input your username', trigger: 'blur'},
+            {min: 3, message: 'Length should be at lease 3', trigger: 'blur'}
+          ],
+          email: [
+            {required: true, message: 'Please input your email', trigger: 'blur'},
+            {min: 3, message: 'Length should be at lease 3', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: 'Please input your password', trigger: 'change'},
+            {min: 3, message: 'Length should be at lease 3', trigger: 'blur'},
+
+          ],
+          pass: [
+            {validator: validatePass, trigger: 'blur'}
+          ],
+          pass_confirmation: [
+            {validator: validatePass2, trigger: 'blur'}
+          ],
         },
         DOM: {},
         mouseMove: null
@@ -160,29 +176,35 @@
       },
 
       async submitRegister() {
-        const isValid = await this.$validator.validateAll()
-        if (isValid) {
-          this.register(this.register_form).then(message => {
-            this.$notify(message)
-          })
-        }
+        this.$refs['register_form'].validate((valid) => {
+          if (valid) {
+            this.register(this.register_form).then(message => {
+              this.$notify(message)
+            })
+          } else {
+            return false
+          }
+        })
       },
 
       async submitLogin() {
-        const isValid = await this.$validator.validateAll()
-        if (isValid) {
-          this.login(this.login_form)
-            .then(message => {
-              this.$notify(message)
-            })
-            .catch((e) => {
-              this.$notify({
-                title: 'Something went wrong',
-                message: `Error: ${e}`,
-                type: 'error'
+        this.$refs['login_form'].validate((valid) => {
+          if (valid) {
+            this.login(this.login_form)
+              .then(message => {
+                this.$notify(message)
               })
-            })
-        }
+              .catch((e) => {
+                this.$notify({
+                  title: 'Something went wrong',
+                  message: `Error: ${e}`,
+                  type: 'error'
+                })
+              })
+          } else {
+            return false
+          }
+        });
       }
     }
   }
@@ -199,6 +221,7 @@
   .scale-enter-active, .scale-leave-active {
     transition: opacity 0.5s $cubic-ease, transform 0.5s $cubic-ease;
   }
+
   .scale-enter {
     opacity: 0;
     transform: scale(1.05)
