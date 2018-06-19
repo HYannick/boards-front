@@ -47,6 +47,9 @@
   import { mapState } from 'vuex'
   export default {
     middleware: 'authenticated',
+    transition: {
+      name: 'scale',
+    },
     mounted() {
       this.$nextTick(() => {
         const rellax = new Rellax('.rellax')

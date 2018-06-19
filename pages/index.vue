@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container-wide">
     <b-carousel></b-carousel>
     <div style="height: 300vh"></div>
   </section>

@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 import CookieParser from 'cookieparser'
 import auth from './modules/auth'
 import user from './modules/user'
+import book_create from './modules/book-create'
 const createStore = () => {
   return new Vuex.Store({
     actions: {
@@ -11,7 +12,7 @@ const createStore = () => {
           try {
             this.$axios.setToken(parsed, 'Bearer')
             const user = await this.$axios.$get('http://localhost:5000/api/v1/user')
-
+            console.log(parsed)
             const userInfos = {
               username: user.username,
               email: user.email,
@@ -30,7 +31,8 @@ const createStore = () => {
     },
     modules: {
       auth,
-      user
+      user,
+      book_create
     }
   })
 }

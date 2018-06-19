@@ -54,7 +54,7 @@ const actions = {
         const userInfos = {
           username: user.username,
           email: user.email,
-          admin: user.is_admin
+          profile_img: user.profile_img
         }
         commit('updateAuthStatus', userInfos)
         Cookie.set('authToken', login.token)

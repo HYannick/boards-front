@@ -39,7 +39,7 @@ const actions = {
   },
   async uploadAvatar({commit}, payload) {
     this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
-    const uploadConfig = await this.$axios.$get('http://localhost:5000/api/v1/upload')
+    const uploadConfig = await this.$axios.$get('http://localhost:5000/api/v1/upload?folder=avatar')
     await this.$axios.$post('http://localhost:5000/api/v1/user/avatar', {
       avatarUrl: uploadConfig.key
     })

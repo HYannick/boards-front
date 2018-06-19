@@ -46,7 +46,7 @@
         :show-file-list="false"
         action=""
         :http-request="postAvatar">
-        <i class="el-icon-plus avatar-uploader-icon" v-if="!imageUrl"></i>
+        <i class="el-icon-plus avatar-uploader-icon" v-if="!coverUrl"></i>
       </el-upload>
     </el-col>
   </div>
@@ -56,6 +56,9 @@
   import formRules from '~/assets/js/form-rules'
 
   export default {
+    transition: {
+      name: 'fade',
+    },
     mounted() {
       Object.assign(this.user_form, this.userInfos)
     },
@@ -80,7 +83,7 @@
         }
       };
       return {
-        imageUrl: '',
+        coverUrl: '',
         user_form: {
           username: '',
           email: '',
@@ -121,7 +124,7 @@
       },
 
       updatePreview(file) {
-        this.imageUrl = URL.createObjectURL(file);
+        this.coverUrl = URL.createObjectURL(file);
       },
 
       updateProfile() {

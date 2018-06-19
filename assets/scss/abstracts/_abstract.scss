@@ -1,8 +1,9 @@
 // Only variables that we need inside our custom scss files are listed here
 
 @import "utils/breakpoints";
+@import "modules/variables";
 @import "common/colors";
 @import "common/sizes";
 @import "utils/mixins";
 @import "common/typography";
-@import "modules/variables";
+@import "common/transitions";

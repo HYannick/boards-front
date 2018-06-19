@@ -1,6 +1,5 @@
 @import "abstracts/abstract";
 
-
 @import "abstracts/modules/buttons";
 @import "abstracts/modules/form";
 a {
@@ -27,7 +26,11 @@ body {
     background: $color--light;
   }
 }
-
+.container-wide {
+  max-width: 144rem;
+  width: 100%;
+  margin: 0 auto;
+}
 .container {
   max-width: 114rem;
   width: 100%;

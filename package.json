@@ -24,7 +24,8 @@
     "lodash": "^4.17.10",
     "nuxt": "^1.0.0",
     "nuxt-sass-resources-loader": "^2.0.0",
-    "rellax": "^1.6.2"
+    "rellax": "^1.6.2",
+    "vue-scrollto": "^2.11.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

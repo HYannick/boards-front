@@ -1,5 +1,10 @@
 <template>
   <header class="b-header">
+    <svg width="0" height="0">
+      <clipPath id="clip-header-avatar" clipPathUnits="objectBoundingBox">
+        <path d="M0 1V0l.999.058-.228.929L0 1z" fill="#383434"/>
+      </clipPath>
+    </svg>
     <div class="b-header__wrapper container">
       <nuxt-link to="/" class="b-header__logo">
         <span class="b-header__logo-main">Boards</span>
@@ -30,6 +35,9 @@
           </li>
         </ul>
       </nav>
+      <nuxt-link to="/user" class="b-header__avatar" v-if="isLogged">
+        <img :src="avatarUrl"/>
+      </nuxt-link>
     </div>
   </header>
 </template>
@@ -42,7 +50,10 @@
       return {}
     },
     computed: {
-      ...mapState('auth', ['isLogged'])
+      ...mapState('auth', ['isLogged', 'userInfos']),
+      avatarUrl() {
+        return `https://s3.eu-west-3.amazonaws.com/boards-bucket/${this.userInfos.profile_img}`
+      }
     },
     mounted() {
     },
@@ -109,6 +120,18 @@
           color: $color--font;
         }
       }
+    }
+  }
+  .b-header__avatar {
+    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    -webkit-clip-path: url("#clip-header-avatar");
+    clip-path: url("#clip-header-avatar");
+    img {
+      width: 100%;
     }
   }
 </style>
