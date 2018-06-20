@@ -1,38 +1,42 @@
 <template>
-  <el-row class="ressources container-wide">
-    <div class="ressources__background-image"
-         :style="{backgroundImage: `url('/b__background.jpg')`}">
-    </div>
-    <el-col :span="16" :offset="4" class="ressources-col container">
-      <div class="ressources__title" data-rellax-speed="0.5">
-        <h2>Alright. Put some ressources here!</h2>
-      </div>
-      <el-button class="prev-btn prev-btn--reversed" @click="goBack">
-        <span>Previous</span>
-      </el-button>
-      <el-upload
-        class="ressources__upload"
-        ref="upload"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        multiple
-        drag
-        :http-request="uploadZip"
-        :on-remove="handleRemove"
-        :before-upload="checkFileExtension">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-        <div class="el-upload__tip" slot="tip">cbr files only!</div>
-      </el-upload>
+  <div class="ressources container-wide">
+      <el-col :span="16" offset="6">
+        <div class="ressources__container">
+          <div class="ressources__title" data-rellax-speed="0.5">
+            <h2>Alright. Put some ressources here!</h2>
+          </div>
+          <back-arrow class="ressources__form-btn ressources__form-btn-prev" @click.prevent="goBack"></back-arrow>
+          <el-upload
+            class="ressources__upload"
+            ref="upload"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            multiple
+            drag
+            :http-request="uploadZip"
+            :on-remove="handleRemove"
+            :before-upload="checkFileExtension">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+            <div class="el-upload__tip" slot="tip">cbr files only!</div>
+          </el-upload>
+        </div>
+      </el-col>
+    <el-row>
       <el-button class="next-btn next-btn--reversed" @click="submitUpload">
         <span>Finish!</span>
       </el-button>
-    </el-col>
-  </el-row>
+    </el-row>
+  </div>
 </template>
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
   import {snakeCase, findIndex} from 'lodash'
+  import BackArrow from '~/components/backArrow.vue'
+
   export default {
+    components: {
+      BackArrow
+    },
     data() {
       return {
         files: [],
@@ -88,54 +92,45 @@
     margin-top: 10rem;
     height: 100vh;
     display: flex;
-    align-items: center;
-
-    &__background-image {
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    &__form-btn {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: -8.5rem;
-      background-size: cover;
-      background-repeat: no-repeat;
-      -webkit-clip-path: url("#clip-bg-wide");
-      clip-path: url("#clip-bg-wide");
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        opacity: 0.9;
-        background: $color--brown;
+      &-prev {
+        top: 15rem;
+        left: -5rem;
       }
-
     }
-    color: $color--light;
-
     label {
       color: $color--light;
     }
-    .ressources__upload {
+    .ressources__container {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .ressources__upload {
+      width: 100%;
+      height: 65rem;
       .el-upload {
-        max-width: 50rem;
         width: 100%;
+        height: 100%;
       }
       .el-upload-dragger {
         width: 100%;
-        height: 30rem;
+        height: 100%;
+        -webkit-clip-path: url("#clip-download-bg");
+        clip-path: url("#clip-download-bg");
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         border: 1px solid $color--yellow;
         border-radius: 0;
-        background: transparentize($color--yellow, 0.5);
+        background: $color--brown;
         i {
           color: $color--light;
         }
@@ -150,18 +145,31 @@
         color: $color--light;
       }
       .el-upload-list {
-        color: $color--light;
-        max-width: 50rem;
-        width: 100%;
+        position: absolute;
+        bottom: 35px;
+        left: 50%;
+        transform: translateX(-50%);
+        overflow-y: scroll;
+        height: 20rem;
+        padding: 1rem;
+        li {
+          border-radius: 0;
+        }
+        a {
+          border-radius: 0;
+          color: $color--yellow;
+          &:hover {
+            color: $color--brown;
+          }
+        }
       }
     }
   }
 
-  .ressources-col {
-    position: relative;
-  }
-
   .ressources__title {
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 1;
     margin: 0 auto;
     -webkit-clip-path: url("#clip-title-1");

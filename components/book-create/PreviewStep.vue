@@ -1,34 +1,32 @@
 <template>
   <el-row class="previews container-wide">
-    <div class="previews__background-image"
-         :style="{backgroundImage: `url('/b__background.jpg')`}">
+    <div class="previews__background-image">
+      <img class="rellax" data-rellax-speed="1" data-rellax-percentage="0.5" height="100%" src="/b__background.jpg"/>
     </div>
     <el-col :span="22" :offset="1" class="previews-col">
       <div class="previews__title" data-rellax-speed="0.5">
-        <h2>Cool! Some previews here?</h2>
+        <heading-title data-text="Cool! Some previews here?" color="white" align="left">Cool! Some previews here?</heading-title>
       </div>
       <div class="container">
-        <el-button class="prev-btn prev-btn--reversed" @click="goBack">
-          <span>Previous</span>
-        </el-button>
-        <el-upload
-          class="previews-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          list-type="picture-card"
-          :limit="10"
-          multiple
-          :on-exceed="handleExceed"
-          :on-preview="handlePictureCardPreview"
-          :http-request="uploadPreviews"
-          :on-remove="handleRemove">
-          <i class="el-icon-plus"></i>
-        </el-upload>
+        <el-col class="preview__form" :span="20" :offset="2">
+          <back-arrow class="preview__form-btn preview__form-btn-prev" :reversed="true" @click.prevent="goBack"></back-arrow>
+          <el-upload
+            class="previews-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :limit="10"
+            multiple
+            :on-exceed="handleExceed"
+            :on-preview="handlePictureCardPreview"
+            :http-request="uploadPreviews"
+            :on-remove="handleRemove">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <next-arrow class="preview__form-btn preview__form-btn-next" :reversed="true" @click.prevent="submitPreviews"></next-arrow>
+        </el-col>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-        <el-button class="next-btn prev-btn--reversed" @click="submitPreviews">
-          <span>Next</span>
-        </el-button>
       </div>
     </el-col>
   </el-row>
@@ -36,8 +34,15 @@
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
   import {snakeCase, findIndex} from 'lodash'
-
+  import NextArrow from '~/components/NextArrow.vue'
+  import BackArrow from '~/components/backArrow.vue'
+  import HeadingTitle from '~/components/HeadingTitle.vue'
   export default {
+    components: {
+      NextArrow,
+      BackArrow,
+      HeadingTitle
+    },
     data() {
       return {
         scrollOpts: {
@@ -94,7 +99,20 @@
 </script>
 <style lang="scss">
 
-
+  .preview__form {
+    position: relative;
+    .preview__form-btn {
+      position: absolute;
+      &-prev {
+        top: 2rem;
+        left: -6rem;
+      }
+      &-next {
+        bottom: 2rem;
+        right: -6rem;
+      }
+    }
+  }
   .previews {
     position: relative;
     margin-top: 10rem;
@@ -104,15 +122,7 @@
     .container {
       position: relative;
     }
-    .previews__background-image {
 
-    }
-    .prev-btn {
-      position: absolute;
-      top: -10rem;
-      left: 50%;
-      transform: translateX(-50%);
-    }
     &__background-image {
       position: absolute;
       top: 0;
@@ -121,8 +131,9 @@
       bottom: -8.5rem;
       background-size: cover;
       background-repeat: no-repeat;
-      -webkit-clip-path: url("#clip-bg-alternate");
-      clip-path: url("#clip-bg-alternate");
+      overflow: hidden;
+      -webkit-clip-path: url("#clip-bg-preview");
+      clip-path: url("#clip-bg-preview");
       &:before {
         content: '';
         position: absolute;
@@ -130,13 +141,11 @@
         left: 0;
         bottom: 0;
         right: 0;
-        opacity: 0.9;
+        opacity: 0.95;
+        z-index: 1;
         background: $color--brown;
       }
 
-    }
-    &-uploader {
-      margin-top: 10rem;
     }
     .el-upload-list--picture-card {
       .el-upload-list__item-thumbnail {
@@ -173,17 +182,12 @@
     position: relative;
   }
   .previews__title {
-    position: absolute;
-    top: -10rem;
     z-index: 1;
-    -webkit-clip-path: url("#clip-title-1");
-    clip-path: url("#clip-title-1");
-    background: $color--yellow;
-    color: $color--brown;
+    color: $color--light;
     padding: 2.5rem 5rem 2.5rem 3rem;
-    max-width: 40rem;
+    max-width: 50rem;
     width: 100%;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     letter-spacing: 0.3rem;
     font-family: $font-family--main;
   }

@@ -2,12 +2,10 @@
   <el-row class="synopsis container">
     <el-col :span="16" :offset="4" class="synopsis-col">
       <div class="synopsis__title rellax" data-rellax-speed="0.5">
-        <h2>What about the story?</h2>
+        <heading-title data-text="What about the story?" align="right">What about the story?</heading-title>
       </div>
-      <el-button class="prev-btn" @click="goBack">
-        <span>Previous</span>
-      </el-button>
-      <el-form :model="synopsis_form" :rules="rules" ref="synopsis_form" label-position="top">
+      <el-form class="synopsis__form" :model="synopsis_form" :rules="rules" ref="synopsis_form" label-position="top">
+        <back-arrow class="synopsis__form-btn synopsis__form-btn-prev" @click.prevent="goBack"></back-arrow>
         <el-form-item class="form__input" label="Short Description" prop="short_description">
           <el-input name="short_description" type="textarea" v-model="synopsis_form.short_description"
                     placeholder="A little description about your book"></el-input>
@@ -16,16 +14,22 @@
           <el-input name="description" type="textarea" :rows="6" v-model="synopsis_form.description"
                     placeholder="Type the story here"></el-input>
         </el-form-item>
-        <el-button class="next-btn" @click="submitSynopsis">
-          <span>Next</span>
-        </el-button>
+        <next-arrow class="synopsis__form-btn synopsis__form-btn-next" @click.prevent="submitSynopsis"></next-arrow>
       </el-form>
     </el-col>
   </el-row>
 </template>
 <script>
   import {mapState, mapMutations} from 'vuex'
+  import NextArrow from '~/components/NextArrow.vue'
+  import BackArrow from '~/components/BackArrow.vue'
+  import HeadingTitle from '~/components/HeadingTitle.vue'
   export default {
+    components: {
+      NextArrow,
+      BackArrow,
+      HeadingTitle
+    },
     data() {
       return {
         scrollOpts: {
@@ -75,34 +79,31 @@
     height: 100vh;
     display: flex;
     align-items: center;
-    /*-webkit-clip-path: url("#clip-bg-2");*/
-    /*clip-path: url("#clip-bg-2");*/
-    //background: $color--brown;
-   // color: $color--light;
-
-    label {
-      //color: $color--light;
-    }
   }
 
   .synopsis-col {
     position: relative;
   }
 
+  .synopsis__form {
+    .synopsis__form-btn {
+      position: absolute;
+      &-prev {
+        top: -2rem;
+        left: -5rem;
+      }
+      &-next {
+        bottom: -2rem;
+        right: -5rem;
+      }
+    }
+  }
   .synopsis__title {
     position: absolute;
     top: -10rem;
-    right: -10rem;
+    right: 0;
     z-index: 1;
-    -webkit-clip-path: url("#clip-title-1");
-    clip-path: url("#clip-title-1");
-    background: $color--yellow;
-    color: $color--brown;
-    padding: 2.5rem 5rem 2.5rem 3rem;
     max-width: 30rem;
     width: 100%;
-    font-size: 2.5rem;
-    letter-spacing: 0.3rem;
-    font-family: $font-family--main;
   }
 </style>

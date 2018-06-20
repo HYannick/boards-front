@@ -96,11 +96,9 @@ const actions = {
     commit('updateBookForm', {[payload.name]: temp})
   },
 
-  async createBook({commit, state}, payload) {
-    console.log('Creating the book page...')
+  async createBook({commit, state}) {
     const {cover, background_cover, img_title, previews, ressources} = state.book_form
     try {
-      this.$axios.setToken(false)
 
       await pushtoS3([cover, background_cover, img_title], this.$axios)
       await helpers.asyncForEach(previews, async preview => await pushtoS3(preview, this.$axios))

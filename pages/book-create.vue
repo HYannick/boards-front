@@ -1,67 +1,79 @@
 <template>
   <div class="book-create">
-    <svg width="0" height="0">
-      <clipPath id="clip-headlines-background" clipPathUnits="objectBoundingBox">
-        <path d="M0 1V0l.999.058-.228.929L0 1z" fill="#383434"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-steps" clipPathUnits="objectBoundingBox">
-        <path class="st0" d="M7.553.999L6.688.867 6.559.222l.994-.22v.997z" transform="translate(-6.556)"/>
-        <path class="st0" d="M7.55.997V.003l-.988.219.129.645.859.13M7.556 1L6.685.867 6.556.221l1-.221v1z"
-              transform="translate(-6.556)"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-headlines-title" clipPathUnits="objectBoundingBox">
-        <path d="M0 .205L1 0 .985 1H.05L0 .205z" fill="#fff"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-upload-btn-1" clipPathUnits="objectBoundingBox">
-        <path d="M0 0l.909.196L1 .88 0 1V0z" fill="#fff"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-upload-btn-2" clipPathUnits="objectBoundingBox">
-        <path d="M0 0h1L.799.756 0 1V0z" fill="#fff"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-title-1" clipPathUnits="objectBoundingBox">
-        <path d="M0 .142L1 0 .909 1 .056.869 0 .142z" fill="#383434"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-title-2" clipPathUnits="objectBoundingBox">
-        <path d="M0 .144L1 0 .868.911.155 1 0 .144z" fill="#383434"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-bg-wide" clipPathUnits="objectBoundingBox">
-        <path d="M0 .105L1 0v1L0 .807V.105z" fill="#383434"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-next-btn" clipPathUnits="objectBoundingBox">
-        <path d="M.084.823L.497 1 .911.823 1 0H0l.084.823z" fill="none"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-prev-btn" clipPathUnits="objectBoundingBox">
-        <path d="M.916.177L.503 0 .089.177.001 1h1L.916.177z" fill="none"/><path d="M.502.105L.15.256.081.9h.838L.853.256.502.105m0-.105l.413.177L.999 1h-1L.087.177.502 0z" fill="#383434"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-bg-2" clipPathUnits="objectBoundingBox">
-        <path d="M.998.998L.134.853.002.002l.997.044v.952z" fill="#383434"/>
-      </clipPath>
-    </svg>
-    <svg width="0" height="0">
-      <clipPath id="clip-bg-alternate" clipPathUnits="objectBoundingBox">
-        <path d="M0 .093L1 0v.888L0 1V.093z" fill="#383434"/>
-      </clipPath>
-    </svg>
+    <div class="svg-sprite">
+      <svg width="0" height="0">
+        <clipPath id="clip-headlines-background" clipPathUnits="objectBoundingBox">
+          <path d="M0 0l1 .049-.229.778L.001 1 0 0z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-steps" clipPathUnits="objectBoundingBox">
+          <path class="st0" d="M7.553.999L6.688.867 6.559.222l.994-.22v.997z" transform="translate(-6.556)"/>
+          <path class="st0" d="M7.55.997V.003l-.988.219.129.645.859.13M7.556 1L6.685.867 6.556.221l1-.221v1z"
+                transform="translate(-6.556)"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-headlines-title" clipPathUnits="objectBoundingBox">
+          <path d="M0 .205L1 0 .985 1H.05L0 .205z" fill="#fff"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-upload-btn-1" clipPathUnits="objectBoundingBox">
+          <path d="M0 0l.909.196L1 .88 0 1V0z" fill="#fff"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-upload-btn-2" clipPathUnits="objectBoundingBox">
+          <path d="M0 0h1L.799.756 0 1V0z" fill="#fff"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-title-1" clipPathUnits="objectBoundingBox">
+          <path d="M0 .142L1 0 .909 1 .056.869 0 .142z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-title-2" clipPathUnits="objectBoundingBox">
+          <path d="M0 .144L1 0 .868.911.155 1 0 .144z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-bg-wide" clipPathUnits="objectBoundingBox">
+          <path d="M0 .105L1 0v1L0 .807V.105z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-next-btn" clipPathUnits="objectBoundingBox">
+          <path d="M.084.823L.497 1 .911.823 1 0H0l.084.823z" fill="none"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-prev-btn" clipPathUnits="objectBoundingBox">
+          <path d="M.916.177L.503 0 .089.177.001 1h1L.916.177z" fill="none"/><path d="M.502.105L.15.256.081.9h.838L.853.256.502.105m0-.105l.413.177L.999 1h-1L.087.177.502 0z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-bg-2" clipPathUnits="objectBoundingBox">
+          <path d="M.998.998L.134.853.002.002l.997.044v.952z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-bg-alternate" clipPathUnits="objectBoundingBox">
+          <path d="M0 .093L1 0v.888L0 1V.093z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-bg-preview" clipPathUnits="objectBoundingBox">
+          <path d="M0 0l1 .114V.87L0 1V0z" fill="#383434"/>
+        </clipPath>
+      </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-download-bg" clipPathUnits="objectBoundingBox">
+          <path d="M.102.1L1 0v.974L0 1 .102.1z" fill="#383434"/>
+        </clipPath>
+      </svg>
+    </div>
     <div class="book-create__steps">
       <el-steps direction="vertical" finish-status="success" :active="activeStep">
         <el-step title="Headlines"></el-step>
@@ -77,13 +89,6 @@
       <preview-step></preview-step>
       <price-step></price-step>
       <ressources-step></ressources-step>
-      <!--<div class="form__input">-->
-      <!--<button type="submit" class="b-btn">Register</button>-->
-      <!--</div>-->
-      <!--<el-form-item>-->
-      <!--<el-button class="b-btn" @click="createBook()">Create the book</el-button>-->
-      <!--</el-form-item>-->
-      <!--</el-col>-->
     </div>
   </div>
 </template>
@@ -202,47 +207,11 @@
         font-family: $font-family--main;
       }
     }
-    .next-btn {
-      -webkit-clip-path: url("#clip-next-btn");
-      clip-path: url("#clip-next-btn");
-    }
-    .prev-btn {
-      -webkit-clip-path: url("#clip-prev-btn");
-      clip-path: url("#clip-prev-btn");
-    }
 
-    .next-btn, .prev-btn {
-      height: 5rem;
-      border-radius: 0;
-      background: $color--brown;
-      color: $color--light;
-      border: 0.2rem solid $color--brown;
-      margin: 2.5rem auto 0;
-      display: block;
-      width: 20rem;
-      &:hover, &:focus {
-        background: $color--yellow;
-        color: $color--brown;
-        border: 0.2rem solid $color--yellow;
-      }
-      &--reversed {
-        background: $color--yellow;
-        color: $color--brown;
-        border: 0.2rem solid $color--yellow;
-        margin: 2.5rem auto 0;
-        display: block;
-        width: 20rem;
-        &:hover, &:focus {
-          background: $color--light;
-          color: $color--brown;
-          border: 0.2rem solid $color--light;
-        }
-      }
-    }
-
-    svg {
+    .svg-sprite {
       position: absolute;
     }
+
     .book-create__steps {
       -webkit-clip-path: url("#clip-steps");
       clip-path: url("#clip-steps");

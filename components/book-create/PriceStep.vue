@@ -1,11 +1,9 @@
 <template>
   <el-row class="pricing container">
     <el-col :span="16" :offset="1" class="pricing__wrapper">
-      <el-button class="prev-btn" @click="goBack">
-        <span>Previous</span>
-      </el-button>
+      <back-arrow class="pricing__form-btn pricing__form-btn-prev" @click.prevent="goBack"></back-arrow>
       <div class="pricing__title">
-        <h2>That's great!<br>but...How much?</h2>
+        <heading-title data-text="That's great! but...How much?" align="center">That's great!<br>but...How much?</heading-title>
       </div>
       <div class="pricing__slider">
         <el-slider v-model="pricing_form.min_max" range></el-slider>
@@ -19,17 +17,24 @@
             <p>{{pricing_form.min_max[1]}}€</p>
           </div>
         </div>
-        <el-button class="next-btn" @click="submitPrices">
-          <span>Next</span>
-        </el-button>
+        <next-arrow class="pricing__form-btn pricing__form-btn-next" @click.prevent="submitPrices"></next-arrow>
       </div>
+
     </el-col>
   </el-row>
 </template>
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
+  import NextArrow from '~/components/NextArrow.vue'
+  import BackArrow from '~/components/backArrow.vue'
+  import HeadingTitle from '~/components/HeadingTitle.vue'
 
   export default {
+    components: {
+      NextArrow,
+      BackArrow,
+      HeadingTitle
+    },
     data() {
       return {
         coverUrl: '',
@@ -63,30 +68,33 @@
 <style lang="scss">
   .pricing {
     margin-top: 10rem;
-    min-height: 50vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
+  .pricing__wrapper {
+    position: relative;
+    .pricing__form-btn {
+      position: absolute;
+      &-prev {
+        top: 0rem;
+        left: -6rem;
+      }
+      &-next {
+        bottom: 0rem;
+        right: -6rem;
+      }
+    }
+  }
   .pricing__title {
-    -webkit-clip-path: url("#clip-title-2");
-    clip-path: url("#clip-title-2");
-    background-color: $color--brown;
     margin: 0 auto;
     display: flex;
     align-items: center;
     max-width: 50rem;
     width: 100%;
-    padding: 2rem 4rem;
-    h2 {
-      font-family: $font-family--main;
-      font-size: 4rem;
-      color: $color--light;
-      margin-top: 1rem;
-      margin-left: 4rem;
-      letter-spacing: 0.4rem;
-    }
+    text-align: center;
+    justify-content: center;
   }
   .pricing__slider {
     max-width: 40rem;

@@ -14,7 +14,8 @@
         </div>
       </div>
       <div class="headlines__cover">
-        <div data-rellax-speed="2" class="headlines__cover-img rellax" :class="{'headlines__cover-img--empty': !coverUrl}">
+        <div data-rellax-speed="2" class="headlines__cover-img rellax"
+             :class="{'headlines__cover-img--empty': !coverUrl}">
           <div class="headlines__cover-wrapper" :class="{'headlines__cover-wrapper--error': noCover}">
             <el-upload
               class="headlines__cover-uploader"
@@ -51,9 +52,9 @@
           <el-input name="tome_title" type="text" v-model="headline_form.tome_title"
                     placeholder="Type the tome title"></el-input>
         </el-form-item>
-        <el-button class="next-btn" @click="submitHeadlines">
-          <span>Next</span>
-        </el-button>
+      </div>
+      <div class="headlines__next">
+        <next-arrow @click.prevent="submitHeadlines"></next-arrow>
       </div>
     </el-form>
   </el-row>
@@ -61,7 +62,14 @@
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
   import {snakeCase, isEmpty} from 'lodash'
+  import NextArrow from '~/components/NextArrow.vue'
+  import BackArrow from '~/components/backArrow.vue'
+
   export default {
+    components: {
+      NextArrow,
+      BackArrow
+    },
     data() {
       return {
         coverUrl: '',
@@ -111,7 +119,7 @@
       submitHeadlines() {
         this.$refs['headline_form'].validate((valid) => {
           if (valid) {
-            if(isEmpty(this.headline_form.cover)) {
+            if (isEmpty(this.headline_form.cover)) {
               this.noCover = true
               this.$notify.error({
                 title: 'Error',
@@ -141,7 +149,7 @@
   .headlines__wrapper {
     display: grid;
     grid-template-columns: 0.5fr 30rem 10rem 20rem 1fr 1fr 1fr 0.5fr;
-    grid-template-rows: 6rem 10rem 5rem 10rem 25rem 5rem 10rem;
+    grid-template-rows: 6rem 10rem 5rem 10rem 25rem 5rem 30rem;
   }
 
   form {
@@ -151,6 +159,13 @@
     }
   }
 
+  .headlines__next {
+    grid-column: 7;
+    grid-row: 5;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 1rem;
+  }
   .headlines__form {
     grid-column: 5 / span 2;
     grid-row: 4;
@@ -165,7 +180,7 @@
           top: 50%;
           font-size: 3rem;
           left: 50%;
-          transform: translate(-50%,-50%);
+          transform: translate(-50%, -50%);
           color: $color--brown;
           transition: color 0.5s $cubic-ease;
         }
@@ -212,7 +227,7 @@
           top: 50%;
           font-size: 3rem;
           left: 50%;
-          transform: translate(-50%,-50%);
+          transform: translate(-50%, -50%);
           color: $color--light;
           transition: color 0.5s $cubic-ease;
         }
