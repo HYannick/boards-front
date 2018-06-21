@@ -108,6 +108,7 @@
   import RessourcesStep from '~/components/book-create/RessourcesStep.vue'
 
   export default {
+    middleware: 'authenticated',
     components: {
       HeadlineStep,
       SynopsisStep,

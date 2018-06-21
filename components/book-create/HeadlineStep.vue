@@ -64,7 +64,7 @@
   import {mapState, mapMutations, mapActions} from 'vuex'
   import {snakeCase, isEmpty} from 'lodash'
   import NextArrow from '~/components/NextArrow.vue'
-  import BackArrow from '~/components/backArrow.vue'
+  import BackArrow from '~/components/BackArrow.vue'
 
   export default {
     components: {

@@ -26,7 +26,7 @@
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
   import NextArrow from '~/components/NextArrow.vue'
-  import BackArrow from '~/components/backArrow.vue'
+  import BackArrow from '~/components/BackArrow.vue'
   import HeadingTitle from '~/components/HeadingTitle.vue'
 
   export default {

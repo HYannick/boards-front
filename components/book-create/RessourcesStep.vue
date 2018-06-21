@@ -31,7 +31,7 @@
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
   import {snakeCase, findIndex} from 'lodash'
-  import BackArrow from '~/components/backArrow.vue'
+  import BackArrow from '~/components/BackArrow.vue'
 
   export default {
     components: {
