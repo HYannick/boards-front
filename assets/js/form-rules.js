@@ -14,5 +14,23 @@ export default {
         {min: 3, message: 'Length should be at lease 3', trigger: 'blur'},
       ]
     }
+  },
+  bookRules() {
+    return {
+      title: [
+        {required: true, message: 'Please enter a title!', trigger: 'blur'}
+      ],
+      tome_title: [
+        {required: true, message: 'Please enter a tome title!', trigger: 'blur'}
+      ],
+      short_description: [
+        {required: true, message: 'Please enter a short description', trigger: 'blur'},
+        {required: true, min: 10, message: 'Please write more than 10 characters!', trigger: 'blur'}
+      ],
+      description: [
+        {required: true, message: 'Please enter a synopsis', trigger: 'blur'},
+        {required: true, min: 10, message: 'Please write more than 10 characters!', trigger: 'blur'}
+      ]
+    }
   }
 }

@@ -67,7 +67,6 @@
 </script>
 <style lang="scss">
   .pricing {
-    margin-top: 10rem;
     min-height: 100vh;
     display: flex;
     align-items: center;

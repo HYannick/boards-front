@@ -134,26 +134,18 @@
         rellax: null,
         transition_name: 'transitionYUp',
         book_form: {
-          title: `What's the headline?`,
+          title: '',
           img_title: null,
           tome_title: '',
-          short_description: '',
-          description: '',
           cover: null,
           background_cover: null,
+          short_description: '',
+          description: '',
+          previews: [],
           min_price: 0.00,
           max_price: 0.00,
           languages: [],
-          previews: [],
           rating: 0
-        },
-        rules: {
-          title: [
-            {required: true, message: 'Please enter a title :)', trigger: 'blur'}
-          ],
-          tome_title: [
-            {required: true, message: 'Please enter a tome title :)', trigger: 'blur'}
-          ]
         }
       }
     },

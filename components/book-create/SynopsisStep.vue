@@ -24,6 +24,8 @@
   import NextArrow from '~/components/NextArrow.vue'
   import BackArrow from '~/components/BackArrow.vue'
   import HeadingTitle from '~/components/HeadingTitle.vue'
+  import rules from '~/assets/js/form-rules'
+
   export default {
     components: {
       NextArrow,
@@ -51,12 +53,7 @@
           description: '',
         },
         rules: {
-          short_description: [
-            {required: true, message: 'Please enter a short description :)', trigger: 'blur'}
-          ],
-          description: [
-            {required: true, message: 'Please enter a synopsis', trigger: 'blur'}
-          ]
+          ...rules.bookRules()
         }
       }
     },
@@ -82,7 +79,6 @@
 </script>
 <style lang="scss">
   .synopsis {
-    margin-top: 10rem;
     height: 100vh;
     display: flex;
     align-items: center;

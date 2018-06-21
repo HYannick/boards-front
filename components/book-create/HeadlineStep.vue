@@ -35,7 +35,6 @@
         <h2>What's the headline?</h2>
       </div>
       <div class="headlines__form">
-        {{coverUrl}}
         <el-form-item class="form__input" label="Vector Title">
           <el-upload
             class="headlines__form-uploader"
@@ -65,6 +64,7 @@
   import {snakeCase, isEmpty} from 'lodash'
   import NextArrow from '~/components/NextArrow.vue'
   import BackArrow from '~/components/BackArrow.vue'
+  import rules from '~/assets/js/form-rules'
 
   export default {
     components: {
@@ -106,12 +106,7 @@
           background_cover: {},
         },
         rules: {
-          title: [
-            {required: true, message: 'Please enter a title :)', trigger: 'blur'}
-          ],
-          tome_title: [
-            {required: true, message: 'Please enter a tome title :)', trigger: 'blur'}
-          ]
+          ...rules.bookRules()
         }
       }
     },

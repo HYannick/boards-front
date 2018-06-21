@@ -1,10 +1,11 @@
 import Cookie from 'js-cookie'
 import helpers from '~/assets/js/helpers'
 import {isArray, isEmpty} from 'lodash'
+
 const state = {
   activeStep: 0,
   book_form: {
-    title: `What's the headline?`,
+    title: '',
     img_title: '',
     tome_title: '',
     cover: '',
@@ -32,7 +33,7 @@ async function pushtoS3(items, axios) {
           await axios.$put(item.signedUrl, item.file, config(item.file))
         } catch (e) {
           console.log(e.message)
-          return {error: e.message}
+          throw {msg: e.message}
         }
       }
     })
@@ -43,7 +44,7 @@ async function pushtoS3(items, axios) {
     await axios.$put(items.signedUrl, items.file, config(items.file))
   } catch (e) {
     console.log(e.message)
-    return {error: e.message}
+    throw {msg: e.message}
   }
 
 }
@@ -70,7 +71,7 @@ const actions = {
     this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
 
     const getUrl = async (value) => {
-      if(!isEmpty(value)) {
+      if (!isEmpty(value)) {
         return await this.$axios.$get(`http://localhost:5000/api/v1/upload?folder=book&slug=${slug}`)
       }
     }
@@ -98,23 +99,34 @@ const actions = {
 
   async createBook({commit, state}) {
     const {cover, background_cover, img_title, previews, ressources} = state.book_form
-    try {
+    const errorMsg = (e) => ({
+      title: 'An error occured while uploading!',
+      message: e.msg,
+      type: 'error'
+    })
 
+
+    this.$axios.setToken(false)
+    try {
       await pushtoS3([cover, background_cover, img_title], this.$axios)
       await helpers.asyncForEach(previews, async preview => await pushtoS3(preview, this.$axios))
       await helpers.asyncForEach(ressources, async ressource => await pushtoS3(ressource, this.$axios))
+    } catch (e) {
+      throw errorMsg(e)
+    }
 
-      const newData = {
-        img_title: img_title.key || '',
-        cover: cover.key || '',
-        background_cover: background_cover.key || '',
-        previews: previews.map(preview => preview.key),
-        ressources: ressources.map(ressource => ressource.key)
-      }
+    const newData = {
+      img_title: img_title.key || '',
+      cover: cover.key || '',
+      background_cover: background_cover.key || '',
+      previews: previews.map(preview => preview.key),
+      ressources: ressources.map(ressource => ressource.key)
+    }
 
-      commit('updateBookForm', newData)
+    commit('updateBookForm', newData)
 
-      this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
+    this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
+    try {
       await this.$axios.$post('http://localhost:5000/api/v1/book/create', {...state.book_form})
       return {
         title: 'Book Created!!',
@@ -122,11 +134,7 @@ const actions = {
         type: 'success'
       }
     } catch (e) {
-      return {
-        title: 'An error occured while uploading!',
-        message: e.message,
-        type: 'error'
-      }
+      throw errorMsg(e)
     }
   }
 }

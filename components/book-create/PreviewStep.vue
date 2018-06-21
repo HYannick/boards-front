@@ -101,17 +101,16 @@
         left: -6rem;
       }
       &-next {
-        bottom: 2rem;
+        top: 50%;
         right: -6rem;
       }
     }
   }
   .previews {
     position: relative;
-    margin-top: 10rem;
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     .container {
       position: relative;
     }
@@ -147,8 +146,8 @@
         transform: scale(1.2);
       }
       .el-upload-list__item {
-        width: 15rem;
-        height: 20rem;
+        width: calc(20% - 0.8rem);
+        height: 30rem;
         align-items: center;
         justify-content: center;
         border: 0.1rem solid $color--yellow;
@@ -156,8 +155,8 @@
       }
     }
     .el-upload--picture-card {
-      width: 15rem;
-      height: 20rem;
+      width: 20%;
+      height: 30rem;
       background-color: transparentize($color--yellow, 0.7);
       border: 0.1rem solid $color--yellow;
       border-radius: 0;
@@ -178,6 +177,7 @@
     z-index: 1;
     color: $color--light;
     padding: 2.5rem 5rem 2.5rem 3rem;
+    margin-top: 10rem;
     max-width: 50rem;
     width: 100%;
     font-size: 3.5rem;

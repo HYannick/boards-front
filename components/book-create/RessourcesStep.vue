@@ -97,7 +97,6 @@
 </script>
 <style lang="scss">
   .ressources {
-    margin-top: 10rem;
     height: 100vh;
     display: flex;
     align-items: flex-end;
