@@ -54,13 +54,13 @@
       ...mapMutations('book_create', ['updateActiveStep']),
       ...mapActions('book_create', ['fetchPricings']),
       goBack() {
-        this.$scrollTo('.previews', 1000, this.scrollOpts)
+        this.$emit('navigate', 'transitionYDown')
         this.updateActiveStep('down')
       },
       submitPrices() {
         this.fetchPricings(this.pricing_form)
+        this.$emit('navigate', 'transitionYUp')
         this.updateActiveStep('up')
-        this.$scrollTo('.ressources', 1000, this.scrollOpts)
       }
     }
   }

@@ -19,3 +19,36 @@
   opacity: 0;
   transform: scale(0.9)
 }
+
+/* moving */
+.transitionYUp-move {
+  transition: 0.7s $cubic-ease;
+}
+
+.transitionYUp-enter-active, .transitionYUp-leave-active {
+  transition: 0.7s $cubic-ease;
+}
+
+.transitionYUp-enter {
+  opacity: 0;
+  transform: translateY(100%)
+}
+
+.transitionYUp-leave-to {
+  opacity: 0;
+  transform: translateY(-100%)
+}
+
+.transitionYDown-enter-active, .transitionYDown-leave-active {
+  transition: 0.7s $cubic-ease;
+}
+
+.transitionYDown-enter {
+  opacity: 0;
+  transform: translateY(-100%)
+}
+
+.transitionYDown-leave-to {
+  opacity: 0;
+  transform: translateY(100%)
+}

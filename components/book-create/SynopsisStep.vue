@@ -30,15 +30,22 @@
       BackArrow,
       HeadingTitle
     },
+    created() {
+      this.$nextTick(() => {
+        const {short_description, description} = this.book_form
+        const updatedData = {
+          short_description,
+          description
+        }
+
+        Object.assign(this.synopsis_form, updatedData)
+      })
+    },
+    computed: {
+      ...mapState('book_create', ['book_form']),
+    },
     data() {
       return {
-        scrollOpts: {
-          easing: [0.8, 0, 0.2, 1],
-          offset: -100,
-          cancelable: false,
-          x: false,
-          y: true
-        },
         synopsis_form: {
           short_description: '',
           description: '',
@@ -56,15 +63,15 @@
     methods: {
       ...mapMutations('book_create', ['updateBookForm', 'updateActiveStep']),
       goBack() {
-        this.$scrollTo('.headlines', 1000, this.scrollOpts)
+        this.$emit('navigate', 'transitionYDown')
         this.updateActiveStep('down')
       },
       submitSynopsis() {
         this.$refs['synopsis_form'].validate((valid) => {
           if (valid) {
             this.updateBookForm(this.synopsis_form)
+            this.$emit('navigate', 'transitionYUp')
             this.updateActiveStep('up')
-            this.$scrollTo('.previews', 1000, this.scrollOpts)
           } else {
             return false
           }

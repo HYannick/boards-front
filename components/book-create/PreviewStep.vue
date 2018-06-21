@@ -45,13 +45,6 @@
     },
     data() {
       return {
-        scrollOpts: {
-          easing: [0.8, 0, 0.2, 1],
-          offset: -100,
-          cancelable: false,
-          x: false,
-          y: true
-        },
         dialogImageUrl: '',
         dialogVisible: false,
         previews: []
@@ -67,7 +60,7 @@
         this.$message.warning(`The limit is 6, you selected ${files.length} files this time, add up to ${files.length + fileList.length} totally`);
       },
       goBack() {
-        this.$scrollTo('.synopsis', 1000, this.scrollOpts)
+        this.$emit('navigate', 'transitionYDown')
         this.updateActiveStep('down')
       },
       handleRemove(file, fileList) {
@@ -91,8 +84,8 @@
           data: this.previews,
           slug: `${snakeCase(this.book_form.title)}/${snakeCase(this.book_form.tome_title)}`,
         })
+        this.$emit('navigate', 'transitionYUp')
         this.updateActiveStep('up')
-        this.$scrollTo('.pricing', 1000, this.scrollOpts)
       }
     }
   }

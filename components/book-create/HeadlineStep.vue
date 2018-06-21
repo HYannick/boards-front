@@ -10,7 +10,7 @@
           <span>Edit Background</span>
         </el-upload>
         <div class="headlines__background-image rellax"
-             :style="{backgroundImage: `url(${backgroundUrl}`}">
+             :style="{backgroundImage: backgroundUrl ? `url(${backgroundUrl}`: 'none'}">
         </div>
       </div>
       <div class="headlines__cover">
@@ -35,6 +35,7 @@
         <h2>What's the headline?</h2>
       </div>
       <div class="headlines__form">
+        {{coverUrl}}
         <el-form-item class="form__input" label="Vector Title">
           <el-upload
             class="headlines__form-uploader"
@@ -70,19 +71,33 @@
       NextArrow,
       BackArrow
     },
+    created() {
+      this.$nextTick(() => {
+        const {title, img_title, tome_title, cover, background_cover} = this.book_form
+        const updatedData = {
+          title,
+          img_title,
+          tome_title,
+          cover,
+          background_cover,
+        }
+//        console.log(cover.file)
+//        this.coverUrl = cover ? URL.createObjectURL(cover.file) : ''
+//        this.backgroundUrl = background_cover ? URL.createObjectURL(background_cover.file) : ''
+//        this.vectorUrl = img_title ?  URL.createObjectURL(img_title.file) : ''
+
+        Object.assign(this.headline_form, updatedData)
+      })
+    },
+    computed: {
+      ...mapState('book_create', ['book_form']),
+    },
     data() {
       return {
         coverUrl: '',
         backgroundUrl: '',
         vectorUrl: '',
         noCover: false,
-        scrollOpts: {
-          easing: [0.8, 0, 0.2, 1],
-          offset: -100,
-          cancelable: false,
-          x: false,
-          y: true
-        },
         headline_form: {
           title: '',
           img_title: {},
@@ -103,11 +118,13 @@
     methods: {
       ...mapMutations('book_create', ['updateBookForm', 'updateActiveStep']),
       ...mapActions('book_create', ['createMediaUrls']),
+
       postBackground(data) {
         this.backgroundUrl = URL.createObjectURL(data.file);
         this.headline_form.background_cover = data.file
       },
       postCover(data) {
+        console.log(data.file)
         this.coverUrl = URL.createObjectURL(data.file);
         this.headline_form.cover = data.file
         this.noCover = false
@@ -135,8 +152,8 @@
               img_title: this.headline_form.img_title,
               slug: `${snakeCase(this.headline_form.title)}/${snakeCase(this.headline_form.tome_title)}`,
             })
+            this.$emit('navigate', 'transitionYUp')
             this.updateActiveStep('up')
-            this.$scrollTo('.synopsis', 1000, this.scrollOpts)
           } else {
             return false
           }

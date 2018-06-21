@@ -50,7 +50,9 @@
       </svg>
       <svg width="0" height="0">
         <clipPath id="clip-prev-btn" clipPathUnits="objectBoundingBox">
-          <path d="M.916.177L.503 0 .089.177.001 1h1L.916.177z" fill="none"/><path d="M.502.105L.15.256.081.9h.838L.853.256.502.105m0-.105l.413.177L.999 1h-1L.087.177.502 0z" fill="#383434"/>
+          <path d="M.916.177L.503 0 .089.177.001 1h1L.916.177z" fill="none"/>
+          <path d="M.502.105L.15.256.081.9h.838L.853.256.502.105m0-.105l.413.177L.999 1h-1L.087.177.502 0z"
+                fill="#383434"/>
         </clipPath>
       </svg>
       <svg width="0" height="0">
@@ -73,6 +75,11 @@
           <path d="M.102.1L1 0v.974L0 1 .102.1z" fill="#383434"/>
         </clipPath>
       </svg>
+      <svg width="0" height="0">
+        <clipPath id="clip-create-btn" clipPathUnits="objectBoundingBox">
+          <path d="M0 .085L1 0 .914 1 .06.836 0 .085z" fill="#f5d281"/>
+        </clipPath>
+      </svg>
     </div>
     <div class="book-create__steps">
       <el-steps direction="vertical" finish-status="success" :active="activeStep">
@@ -84,11 +91,9 @@
       </el-steps>
     </div>
     <div ref="book_form">
-      <headline-step></headline-step>
-      <synopsis-step></synopsis-step>
-      <preview-step></preview-step>
-      <price-step></price-step>
-      <ressources-step></ressources-step>
+      <transition tag="div" :name="transition_name" mode="out-in">
+        <component :is="view" @navigate="changeTransitionName"></component>
+      </transition>
     </div>
   </div>
 </template>
@@ -113,14 +118,10 @@
     transition: {
       name: 'scale',
     },
-    destroyed() {
-      document.querySelector('body').style.overflow = 'visible'
-    },
     mounted() {
       this.$nextTick(() => {
-        const rellax = new Rellax('.rellax')
-        rellax.refresh()
-//        document.querySelector('body').style.overflow = 'hidden'
+        this.rellax = new Rellax('.rellax')
+        this.rellax.refresh()
       })
     },
     data() {
@@ -129,6 +130,8 @@
         dialogImageUrl: '',
         dialogVisible: false,
         active: 0,
+        rellax: null,
+        transition_name: 'transitionYUp',
         book_form: {
           title: `What's the headline?`,
           img_title: null,
@@ -156,10 +159,23 @@
     computed: {
       ...mapState('auth', ['userInfos']),
       ...mapState('book_create', ['activeStep']),
+      view() {
+        switch(this.activeStep) {
+          case 0 : return 'headline-step'
+          case 1 : return 'synopsis-step'
+          case 2 : return 'preview-step'
+          case 3 : return 'price-step'
+          case 4 : return 'ressources-step'
+          default: return 'headline-step'
+        }
+      }
     },
 
     methods: {
       ...mapActions('book_create', ['updateStepStatus']),
+      changeTransitionName(transition) {
+        this.transition_name = transition
+      },
       scrollOpts($el) {
         return {
           el: $el,
@@ -170,30 +186,7 @@
           x: false,
           y: true
         }
-      },
-//      postAvatar(target) {
-//        const {file} = target
-//        this.uploadAvatar(file).then((message) => {
-//          this.updatePreview(file)
-//          this.$notify(message)
-//        }).catch(message => {
-//          this.$notify(message)
-//        })
-//
-//      },
-
-
-//      createBook() {
-//        this.$refs['book_form'].validate((valid) => {
-//          if (valid) {
-//            this.updateUserInfos(this.book_form).then(message => {
-//              this.$notify(message)
-//            })
-//          } else {
-//            return false
-//          }
-//        })
-//      }
+      }
     }
   }
 </script>
@@ -258,7 +251,7 @@
         &.is-process {
 
         }
-        &.is-wait{
+        &.is-wait {
           color: transparentize($color--dark, 0.5);
         }
       }

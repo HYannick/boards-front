@@ -1,31 +1,31 @@
 <template>
   <div class="ressources container-wide">
-      <el-col :span="16" offset="6">
-        <div class="ressources__container">
-          <div class="ressources__title" data-rellax-speed="0.5">
-            <h2>Alright. Put some ressources here!</h2>
-          </div>
-          <back-arrow class="ressources__form-btn ressources__form-btn-prev" @click.prevent="goBack"></back-arrow>
-          <el-upload
-            class="ressources__upload"
-            ref="upload"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            multiple
-            drag
-            :http-request="uploadZip"
-            :on-remove="handleRemove"
-            :before-upload="checkFileExtension">
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-            <div class="el-upload__tip" slot="tip">cbr files only!</div>
-          </el-upload>
+    <el-col :span="16" :offset="6">
+      <div class="ressources__container">
+        <div class="ressources__title" data-rellax-speed="0.5">
+          <h2>Alright. Put some ressources here!</h2>
         </div>
-      </el-col>
-    <el-row>
-      <el-button class="next-btn next-btn--reversed" @click="submitUpload">
-        <span>Finish!</span>
-      </el-button>
-    </el-row>
+
+        <button class="ressources__btn-create" @click.prevent="submitUpload">
+          <span>Create!</span>
+        </button>
+        <back-arrow class="ressources__form-btn ressources__form-btn-prev" @click.prevent="goBack"></back-arrow>
+        <el-upload
+          class="ressources__upload"
+          ref="upload"
+          action=""
+          multiple
+          drag
+          :http-request="uploadZip"
+          :on-remove="handleRemove"
+          :before-upload="checkFileExtension">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+          <div class="el-upload__text"><em>.CBR Only!</em></div>
+          <div class="el-upload__tip" slot="tip">cbr files only!</div>
+        </el-upload>
+      </div>
+    </el-col>
   </div>
 </template>
 <script>
@@ -62,7 +62,7 @@
         }
       },
       goBack() {
-        this.$scrollTo('.pricing', 1000, this.scrollOpts)
+        this.$emit('navigate', 'transitionYDown')
         this.updateActiveStep('down')
       },
       checkFileExtension(file) {
@@ -72,6 +72,14 @@
         this.files.push(data.file)
       },
       async submitUpload() {
+
+        if (!this.files.length) {
+          this.$notify.error({
+            title: 'No ressources provided.',
+            message: 'Please provide a some ressources.'
+          });
+          return
+        }
         await this.createMultipleMediaUrls({
           name: 'ressources',
           data: this.files,
@@ -82,7 +90,7 @@
         }).catch(message => {
           this.$notify(message)
         })
-        console.log('finished!')
+
       }
     }
   }
@@ -105,6 +113,40 @@
     }
     label {
       color: $color--light;
+    }
+    .ressources__btn-create {
+      -webkit-clip-path: url("#clip-create-btn");
+      clip-path: url("#clip-create-btn");
+      background: $color--yellow;
+      border: none;
+      padding: 1rem 2rem;
+      width: 20rem;
+      height: 10rem;
+      font-size: 3rem;
+      font-family: $font-family--main;
+      cursor: pointer;
+      position: absolute;
+      bottom: 10rem;
+      left: -30rem;
+      z-index: 1;
+      transition: color 0.7s $cubic-ease;
+      &:hover{
+        &:before {
+          width: 100%;
+        }
+        color: $color--yellow;
+      }
+      &:before {
+        content: '';
+        width: 0;
+        height: 100%;
+        background: $color--brown;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: width 0.7s $cubic-ease;
+        z-index: -1;
+      }
     }
     .ressources__container {
       position: relative;
@@ -137,6 +179,7 @@
       }
       .el-upload__text {
         color: $color--light;
+        font-family: $font-family--main;
         em {
           color: $color--yellow;
         }
