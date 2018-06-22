@@ -24,20 +24,29 @@
           <li class="b-header__nav-item">
             <nuxt-link to="/reader">Reader</nuxt-link>
           </li>
+          <transition name="fade" mode="out-in">
+            <li class="b-header__nav-item" v-if="isLogged">
+              <nuxt-link to="/book-create">Create a Book</nuxt-link>
+            </li>
+          </transition>
           <li class="b-header__nav-item">
             <nuxt-link to="/checkout">Cart</nuxt-link>
           </li>
-          <li class="b-header__nav-item"  v-if="!isLogged">
-            <nuxt-link to="/auth#register">Login/Signup</nuxt-link>
-          </li>
-          <li class="b-header__nav-item" v-else>
-            <a href="/" @click.prevent="quit">Logout</a>
-          </li>
+          <transition name="fade" mode="out-in">
+            <li class="b-header__nav-item" v-if="!isLogged" key="login">
+              <nuxt-link to="/auth#register">Login/Signup</nuxt-link>
+            </li>
+            <li class="b-header__nav-item" v-else key="logout">
+              <a href="/" @click.prevent="quit">Logout</a>
+            </li>
+          </transition>
         </ul>
       </nav>
-      <nuxt-link to="/user" class="b-header__avatar" v-if="isLogged">
-        <img :src="avatarUrl"/>
-      </nuxt-link>
+      <transition name="fade" mode="out-in">
+        <nuxt-link to="/user" class="b-header__avatar" v-if="isLogged">
+          <img :src="avatarUrl"/>
+        </nuxt-link>
+      </transition>
     </div>
   </header>
 </template>
@@ -45,6 +54,7 @@
 <script>
   import {mapState, mapActions} from 'vuex'
   import Cookie from 'js-cookie'
+
   export default {
     data() {
       return {}
@@ -122,6 +132,7 @@
       }
     }
   }
+
   .b-header__avatar {
     width: 6rem;
     display: flex;

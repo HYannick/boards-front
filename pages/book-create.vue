@@ -91,7 +91,7 @@
       </el-steps>
     </div>
     <div ref="book_form">
-      <transition tag="div" :name="transition_name" mode="out-in">
+      <transition tag="div" :name="transition_name" mode="out-in" appear>
         <component :is="view" @navigate="changeTransitionName"></component>
       </transition>
     </div>
@@ -99,7 +99,7 @@
 </template>
 <script>
   import Rellax from 'rellax'
-  import {mapState, mapActions} from 'vuex'
+  import {mapState, mapMutations} from 'vuex'
   import formRules from '~/assets/js/form-rules'
   import HeadlineStep from '~/components/book-create/HeadlineStep.vue'
   import SynopsisStep from '~/components/book-create/SynopsisStep.vue'
@@ -117,7 +117,7 @@
       RessourcesStep
     },
     transition: {
-      name: 'scale',
+      name: 'fade',
     },
     mounted() {
       this.$nextTick(() => {
@@ -164,21 +164,15 @@
       }
     },
 
+    destroyed() {
+      this.resetActiveStep()
+      this.resetBookForm()
+    },
+
     methods: {
-      ...mapActions('book_create', ['updateStepStatus']),
+      ...mapMutations('book_create', ['resetActiveStep', 'resetBookForm']),
       changeTransitionName(transition) {
         this.transition_name = transition
-      },
-      scrollOpts($el) {
-        return {
-          el: $el,
-          duration: 1000,
-          easing: [0.8, 0, 0.2, 1],
-          offset: -100,
-          cancelable: false,
-          x: false,
-          y: true
-        }
       }
     }
   }
@@ -206,7 +200,7 @@
       top: 50%;
       right: 0;
       transform: translateY(-50%);
-      width: 11rem;
+      width: 12rem;
       height: 50rem;
       display: flex;
       align-items: center;
@@ -241,9 +235,6 @@
       .el-step__title {
         font-family: $font-family--main;
         font-size: 1.2rem;
-        &.is-process {
-
-        }
         &.is-wait {
           color: transparentize($color--dark, 0.5);
         }

@@ -26,6 +26,7 @@ async function pushtoS3(items, axios) {
   const config = (file) => ({
     headers: {'Content-Type': file.type}
   })
+
   if (isArray(items)) {
     await helpers.asyncForEach(items, async item => {
       if (item) {
@@ -56,6 +57,27 @@ const mutations = {
   },
   updateActiveStep(state, direction) {
     state.activeStep += (direction === 'up') ? 1 : -1
+  },
+  resetActiveStep(state) {
+    state.activeStep = 0
+  },
+  resetBookForm(state) {
+    const resetForm = {
+      title: '',
+      img_title: '',
+      tome_title: '',
+      cover: '',
+      background_cover: '',
+      short_description: '',
+      description: '',
+      previews: [],
+      ressources: [],
+      min_price: 0.00,
+      max_price: 0.00,
+      languages: [],
+      rating: 0
+    }
+    Object.assign(state.book_form, resetForm)
   }
 }
 
@@ -72,7 +94,7 @@ const actions = {
 
     const getUrl = async (value) => {
       if (!isEmpty(value)) {
-        return await this.$axios.$get(`http://localhost:5000/api/v1/upload?folder=book&slug=${slug}`)
+        return await this.$axios.$get(`http://localhost:5000/api/v1/upload?folder=book&slug=${slug}&contentType=${value.type}`)
       }
     }
 
@@ -91,7 +113,14 @@ const actions = {
     const temp = []
     this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
     await helpers.asyncForEach(payload.data, async item => {
-      const url = await this.$axios.$get(`http://localhost:5000/api/v1/upload?folder=book/${payload.name}&slug=${payload.slug}`)
+      let specialExtension
+      if(item.name.includes('.cbr')) {
+        specialExtension = 'application/cbr'
+      } else if (item.name.includes('.cbz')) {
+        specialExtension = 'application/cbz'
+      }
+      console.log(specialExtension)
+      const url = await this.$axios.$get(`http://localhost:5000/api/v1/upload?folder=book/${payload.name}&slug=${payload.slug}&contentType=${specialExtension || item.type}`)
       temp.push({file: item, ...url})
     })
     commit('updateBookForm', {[payload.name]: temp})

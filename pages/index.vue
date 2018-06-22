@@ -10,7 +10,7 @@ import BCarousel from '~/components/Carousel.vue'
 
 export default {
   transition: {
-    name: 'scale',
+    name: 'fade',
   },
   components: {
     BCarousel

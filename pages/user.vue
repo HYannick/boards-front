@@ -48,7 +48,7 @@
   export default {
     middleware: 'authenticated',
     transition: {
-      name: 'scale',
+      name: 'fade',
     },
     mounted() {
       this.$nextTick(() => {
