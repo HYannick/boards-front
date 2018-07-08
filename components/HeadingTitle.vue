@@ -26,8 +26,7 @@
     z-index: 1;
     &.heading--left {
       &:before {
-        left: 50%;
-        transform: scale(1.8);
+        transform: translateX(50%) scale(1.8);
       }
     }
     &.heading--center {
@@ -38,16 +37,14 @@
     }
     &.heading--right {
       &:before {
-        right: 50%;
-        transform: scale(1.8);
+        transform: translateX(100%) scale(1.8);
       }
     }
     &:before{
       content: attr(data-text);
       position: absolute;
-      top: -5rem;
+      top: -4rem;
       left: 1rem;
-      width: 100%;
       opacity: 0.2;
       z-index: -1;
       color: $color--yellow;

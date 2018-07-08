@@ -25,7 +25,7 @@ export default {
       ],
       short_description: [
         {required: true, message: 'Please enter a short description', trigger: 'blur'},
-        {required: true, min: 10, message: 'Please write more than 10 characters!', trigger: 'blur'}
+        {required: true, min: 10, max: 150, message: 'Please write between 10 and 150 characters!', trigger: 'blur'}
       ],
       description: [
         {required: true, message: 'Please enter a synopsis', trigger: 'blur'},

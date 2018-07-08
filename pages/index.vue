@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import BCarousel from '~/components/Carousel.vue'
+  import BCarousel from '~/components/Carousel.vue'
 
-export default {
-  transition: {
-    name: 'fade',
-  },
-  components: {
-    BCarousel
+  export default {
+    transition: {
+      name: 'fade',
+    },
+    components: {
+      BCarousel
+    }
   }
-}
 </script>
