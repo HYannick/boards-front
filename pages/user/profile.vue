@@ -10,7 +10,7 @@
           <el-input v-model="user_form.email" placeholder="Enter your email"></el-input>
         </el-form-item>
         <el-form-item class="form__input" prop="bio">
-          <el-input type="textarea" placeholder="Tell us more about yourself!" v-model="user_form.bio">
+          <el-input type="textarea" placeholder="Tell us more about yourself!" v-model="user_form.bio"  :autosize="{ minRows: 4, maxRows: 10}">
             {{userInfos.bio || ''}}
           </el-input>
         </el-form-item>
@@ -114,7 +114,7 @@
       ...mapActions('user', ['updateUserInfos', 'uploadAvatar']),
       postAvatar(target) {
         const {file} = target
-        this.uploadAvatar(file).then((message) => {
+        this.uploadAvatar({file, folderType: 'avatar'}).then((message) => {
           this.updatePreview(file)
           this.$notify(message)
         }).catch(message => {

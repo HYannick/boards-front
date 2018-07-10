@@ -19,7 +19,8 @@ const createStore = () => {
               admin: user.is_admin,
               verified: user.is_verified,
               bio: user.bio,
-              profile_img: user.profile_img
+              profile_img: user.profile_img,
+              background_img: user.background_img
             }
             commit('auth/updateAuthStatus', userInfos)
           } catch (e) {

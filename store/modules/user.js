@@ -22,7 +22,7 @@ const actions = {
     try {
       this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
       await this.$axios.$put('http://localhost:5000/api/v1/user', userData)
-      commit('auth/updateUser', userData, { root: true })
+      commit('auth/updateUser', userData, {root: true})
       // this.app.router.push('/')
       return {
         title: `Successfully updated ${userData.username}`,
@@ -39,23 +39,25 @@ const actions = {
   },
   async uploadAvatar({commit}, payload) {
     this.$axios.setToken(Cookie.get('authToken'), 'Bearer')
-    const uploadConfig = await this.$axios.$get('http://localhost:5000/api/v1/upload?folder=avatar')
-    await this.$axios.$post('http://localhost:5000/api/v1/user/avatar', {
-      avatarUrl: uploadConfig.key
+    const uploadConfig = await this.$axios.$get('http://localhost:5000/api/v1/upload?folder=' + payload.folderType)
+    await this.$axios.$post('http://localhost:5000/api/v1/user/updateMedias', {
+      [(payload.folderType === 'avatar') ? 'avatarUrl' : 'backgroundUrl']: uploadConfig.key
     })
-    try{
+
+    console.log(uploadConfig)
+    try {
       const config = {
-        headers: { 'Content-Type': payload.type }
+        headers: {'Content-Type': payload.file.type}
       }
       this.$axios.setToken(false)
-      await this.$axios.$put(uploadConfig.signedUrl, payload, config)
-      commit('auth/updateUser', {profile_img: uploadConfig.key}, { root: true })
+      await this.$axios.$put(uploadConfig.signedUrl, payload.file, config)
+      commit('auth/updateUser', payload.folderType === 'avatar' ? {profile_img: uploadConfig.key} : {background_img: uploadConfig.key}, {root: true})
       return {
         title: 'Image uploaded!',
         message: ``,
         type: 'success'
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e)
       return {
         title: 'An error occured while uploading!',

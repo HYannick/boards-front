@@ -27,6 +27,7 @@ module.exports = {
   css: [
     // SCSS file in the project
     'element-ui/lib/theme-chalk/index.css',
+    'swiper/dist/css/swiper.css',
     '@/assets/scss/main.scss'
   ],
   /*
@@ -34,7 +35,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/vue-scrollto'
+    '@/plugins/vue-scrollto',
+    { src: '~/plugins/swiper.js', ssr: false },
   ],
   modules: [
     // provide path to the file with resources

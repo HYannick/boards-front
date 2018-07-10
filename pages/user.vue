@@ -9,7 +9,14 @@
             </clipPath>
           </svg>
           <div class="cover__img">
-            <img class="rellax" src="/img5.png"/>
+            <el-upload
+              class="user-profile__background-uploader"
+              :show-file-list="false"
+              action=""
+              :http-request="postBackground">
+              <span>Edit Background</span>
+            </el-upload>
+            <img class="rellax" :src="(backgroundUrl || '')"/>
           </div>
         </div>
         <div class="user-profile__avatar">
@@ -24,16 +31,30 @@
         </div>
       </el-col>
     </el-row>
-    <el-row  :gutter="20" class="user-profile__body">
+    <el-row :gutter="20" class="user-profile__body">
       <el-col :span="4" class="user-profile__nav">
         <ul>
-          <li><nuxt-link to="/user/overview">Overview</nuxt-link></li>
-          <li><nuxt-link to="/user/profile">Profile</nuxt-link></li>
-          <li><nuxt-link to="/user/books-list">My Books</nuxt-link></li>
-          <li><nuxt-link to="/user/orders">My Orders</nuxt-link></li>
-          <li><nuxt-link to="/user/wishlist">Whislist</nuxt-link></li>
-          <li><nuxt-link to="/user/published-books">Published Books</nuxt-link></li>
-          <li><nuxt-link to="/user/comics-creator">Comics Creator</nuxt-link></li>
+          <li>
+            <nuxt-link to="/user/overview">Overview</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/profile">Profile</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/books-list">My Books</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/orders">My Orders</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/wishlist">Whislist</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/published-books">Published Books</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/comics-creator">Comics Creator</nuxt-link>
+          </li>
         </ul>
       </el-col>
       <el-col :span="20" class="user-profile__content">
@@ -44,7 +65,8 @@
 </template>
 <script>
   import Rellax from 'rellax'
-  import { mapState } from 'vuex'
+  import {mapState, mapActions} from 'vuex'
+
   export default {
     middleware: 'authenticated',
     transition: {
@@ -61,8 +83,29 @@
       ...mapState('auth', ['userInfos']),
       avatarUrl() {
         return `https://s3.eu-west-3.amazonaws.com/boards-bucket/${this.userInfos.profile_img}`
+      },
+      backgroundUrl() {
+        return `https://s3.eu-west-3.amazonaws.com/boards-bucket/${this.userInfos.background_img}`
       }
     },
+
+    methods: {
+      ...mapActions('user', ['updateUserInfos', 'uploadAvatar']),
+      postBackground(target) {
+        const {file} = target
+        this.uploadAvatar({file, folderType: 'background'}).then((message) => {
+          this.updatePreview(file)
+          this.$notify(message)
+        }).catch(message => {
+          this.$notify(message)
+        })
+
+      },
+
+      updatePreview(file) {
+        this.backgroundUrl = URL.createObjectURL(file);
+      },
+    }
   }
 </script>
 <style lang="scss">
@@ -72,6 +115,7 @@
     color: $color--dark;
     margin-bottom: 3rem;
   }
+
   .user-profile {
     margin-top: $header-offset;
   }
@@ -79,8 +123,19 @@
   .user-profile__header {
     position: relative;
   }
+
   .user-profile__body {
     margin-top: 10rem;
+  }
+
+  .user-profile__background-uploader {
+    position: absolute;
+    z-index: 2;
+    bottom: 5rem;
+    right: 5rem;
+    font-size: 2rem;
+    color: $color--light;
+    font-family: $font-family--main;
   }
 
   .user-profile__nav {

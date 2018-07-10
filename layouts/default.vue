@@ -3,15 +3,18 @@
     <b-header></b-header>
     <b-aside-footer></b-aside-footer>
     <nuxt/>
+    <b-footer></b-footer>
   </div>
 </template>
 <script>
   import bHeader from '~/components/Header.vue'
+  import bFooter from '~/components/Footer.vue'
   import bAsideFooter from '~/components/AsideFooter.vue'
   export default {
     components: {
       bHeader,
-      bAsideFooter
+      bAsideFooter,
+      bFooter
     }
   }
 </script>

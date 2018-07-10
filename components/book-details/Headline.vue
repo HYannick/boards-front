@@ -6,9 +6,13 @@
       </div>
     </div>
     <div class="book-details__cover">
-      <div data-rellax-speed="2" class="headlines__cover-img rellax">
+      <div class="book-details__cover-img">
         <div class="headlines__cover-wrapper">
-          <img width="100%" :src="headlines.cover"/>
+          <div class="stack__deco"><img width="100%" :src="headlines.cover"/></div>
+          <div class="stack__deco"><img width="100%" :src="headlines.cover"/></div>
+          <div class="stack__deco"><img width="100%" :src="headlines.cover"/></div>
+          <div class="stack__deco"><img width="100%" :src="headlines.cover"/></div>
+          <div class="stack__deco"><img width="100%" :src="headlines.cover"/></div>
         </div>
       </div>
     </div>
@@ -19,19 +23,83 @@
     <div class="book-details__synopsis">
       <heading-title data-text="Synopsis" align="left">Synopsis</heading-title>
       <p>{{headlines.description}}</p>
+      <div class="book-details__checkout">
+        <el-slider v-model="price"
+                   :min="headlines.min_price"
+                   :max="headlines.max_price"
+                   show-input></el-slider>
+        <!--<el-slider :value="earnings"-->
+                   <!--:min="headlines.min_price - earns"-->
+                   <!--:max="headlines.max_price"-->
+                   <!--show-input-->
+                   <!--:show-input-controls="false"-->
+                   <!--disabled></el-slider>-->
+      </div>
     </div>
   </div>
 </template>
 <script>
   import HeadingTitle from '~/components/HeadingTitle.vue'
+
   export default {
     props: ['headlines'],
     components: {
       HeadingTitle
+    },
+    mounted() {
+      this.$nextTick(() => {
+        const stackList = Array.from(document.querySelectorAll('.stack__deco'))
+        stackList.forEach((stack, i) => {
+          stack.style.transform = `translate(${1 * i * 5}px, ${1 * i * 5}px)`
+        })
+      })
+    },
+    data() {
+      return {
+        price: this.headlines.min_price || 0,
+        earns: 0.45
+      }
+    },
+    computed: {
+      earnings() {
+        return this.price - this.earns
+      }
     }
   }
 </script>
 <style lang="scss">
+  .book-details {
+    .el-slider.el-slider--with-input {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: center;
+      & > div {
+        float: none;
+      }
+    }
+    .el-slider__button-wrapper {
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .el-slider__button {
+      width: 1.2rem;
+      height: 100%;
+      border: 0.3rem solid $color--yellow;
+      background-color: $color--light;
+      border-radius: 0.2rem;
+    }
+    .el-slider__bar {
+      height: 2.5rem;
+      background-color: $color--yellow;
+    }
+    .el-slider__runway {
+      height: 2.5rem;
+      margin: 0 2rem 0 0;
+      background-color: $color--brown;
+      flex: 1;
+    }
+  }
   .book-details__headline {
     display: grid;
     grid-template-columns: 0.5fr 30rem 10rem 20rem 1fr 1fr 1fr 0.5fr;
@@ -42,7 +110,7 @@
     grid-column: 5 / span 3;
     grid-row: 5;
     padding-top: 4rem;
-    p{
+    p {
       margin: 1rem 0;
       font-family: $font-family--main;
       letter-spacing: 0.1rem;
@@ -83,17 +151,33 @@
       justify-content: center;
       overflow: hidden;
       height: 100%;
-      &--empty {
-        background: transparentize($color--yellow, 0.5);
-        i {
-          position: absolute;
-          top: 50%;
-          font-size: 3rem;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: $color--light;
-          transition: color 0.5s $cubic-ease;
-        }
+      .stack__deco {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform-origin: 50% 100%;
+      }
+
+      .stack__deco:first-child {
+        opacity: 0.2;
+      }
+
+      .stack__deco:nth-child(2) {
+        opacity: 0.4;
+      }
+
+      .stack__deco:nth-child(3) {
+        opacity: 0.6;
+      }
+
+      .stack__deco:nth-child(4) {
+        opacity: 0.8;
+      }
+
+      .stack__deco:nth-child(5) {
+        opacity: 1;
       }
     }
     &-wrapper {
@@ -102,73 +186,9 @@
       width: 100%;
       height: 100%;
       transition: border 0.5s $cubic-ease;
-      &--error {
-        border: 0.2rem solid $color--red-2;
-        i {
-          color: $color--red-2;
-        }
-        .headlines__cover-edit {
-          background: $color--red-2;
-        }
-      }
-      &:hover {
-        border: 0.2rem solid $color--yellow;
-        i {
-          color: $color--yellow;
-        }
-      }
+
       img {
         width: 100%;
-      }
-    }
-    &-edit {
-      position: absolute;
-      top: -0.2rem;
-      left: -0.2rem;
-      z-index: 10;
-      width: 15rem;
-      height: 5rem;
-      background: white;
-      display: flex;
-      padding-left: 1rem;
-      padding-top: 1rem;
-      -webkit-clip-path: url("#clip-upload-btn-2");
-      clip-path: url("#clip-upload-btn-2");
-      span {
-        font-size: 2rem;
-        font-family: $font-family--main;
-        transition: color 0.3s;
-      }
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background: $color--yellow;
-        width: 0;
-        height: 100%;
-        transition: width 0.5s $cubic-ease;
-      }
-    }
-    &-uploader {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      img {
-        transform: scale(1.2);
-      }
-      .el-upload {
-        width: 100%;
-        height: 100%;
-      }
-      &:hover {
-        .headlines__cover-edit {
-          color: $color--light;
-          &:before {
-            width: 100%;
-          }
-        }
       }
     }
   }
@@ -195,53 +215,8 @@
       opacity: 0.8;
       transition: opacity 0.3s;
     }
-    &-image {
-      height: 100%;
-    }
-    &-uploader {
-      position: absolute;
-      top: 5rem;
-      left: 0rem;
-      z-index: 10;
-      width: 20rem;
-      height: 5rem;
-      background: white;
-      -webkit-clip-path: url("#clip-upload-btn-1");
-      clip-path: url("#clip-upload-btn-1");
-      display: flex;
-      align-items: center;
-      .el-upload {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      &:hover {
-        span {
-          color: $color--light;
-        }
-        &:before {
-          width: 100%;
-        }
-
-      }
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background: $color--yellow;
-        width: 0;
-        height: 100%;
-        transition: width 0.5s $cubic-ease;
-      }
-      span {
-        font-size: 2rem;
-        font-family: $font-family--main;
-        transition: color 0.3s;
-      }
+    img {
+      transform: scale(1.4);
     }
   }
 </style>

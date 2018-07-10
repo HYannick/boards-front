@@ -82,17 +82,22 @@
       </svg>
     </div>
     <headline :headlines="headlines"></headline>
-    <div class="rellax"></div>
+    <PreviewsCarousel :previews="previews"></PreviewsCarousel>
+    <author-card :author="author"></author-card>
   </div>
 </template>
 <script>
   import Rellax from 'rellax'
   import Headline from '~/components/book-details/Headline.vue'
   import config from '~/config'
+  import PreviewsCarousel from '~/components/PreviewsCarousel'
+  import AuthorCard from "../../components/AuthorCard";
 
   export default {
     middleware: 'authenticated',
     components: {
+      AuthorCard,
+      PreviewsCarousel,
       Headline
     },
     transition: {
@@ -102,7 +107,29 @@
     async mounted() {
       try {
         const book = await this.$axios.$get(`http://localhost:5000/api/v1/book/${this.$route.params.id}/details`)
-        this.book = book
+        console.log(book)
+        const {title, img_title, tome_title, description, cover, background_cover, previews, min_price, max_price} = book
+        this.headlines = {
+          title,
+          vector: `${config.S3URL}/${img_title}`,
+          tome_title,
+          description,
+          cover: `${config.S3URL}/${cover}`,
+          background_cover: `${config.S3URL}/${background_cover}`,
+          min_price,
+          max_price
+        }
+        this.previews = previews.map(preview => ({
+          id: preview.id,
+          url: `${config.S3URL}/${preview.preview_url}`
+        }))
+        const author = await this.$axios.$get(`http://localhost:5000/api/v1/user/${book.user_id}`)
+        this.author = {
+          ...author,
+          profile_img: `${config.S3URL}/${author.profile_img}`,
+          background_img: `${config.S3URL}/${author.background_img}`,
+        }
+
       } catch (e) {
         console.log({error: e.message})
       }
@@ -113,26 +140,14 @@
     },
     data() {
       return {
-        book: {}
+        headlines: {},
+        previews: {},
+        author: {}
       }
     },
-    computed: {
-      headlines() {
-        const {title, img_title, tome_title, description, cover, background_cover} = this.book
-        return {
-          title,
-          vector: `${config.S3URL}/${img_title}`,
-          tome_title,
-          description,
-          cover: `${config.S3URL}/${cover}`,
-          background_cover:  `${config.S3URL}/${background_cover}`,
-        }
-      }
-    },
+    computed: {},
 
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 
