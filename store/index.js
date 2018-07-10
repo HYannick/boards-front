@@ -12,7 +12,6 @@ const createStore = () => {
           try {
             this.$axios.setToken(parsed, 'Bearer')
             const user = await this.$axios.$get('http://localhost:5000/api/v1/user')
-            console.log(parsed)
             const userInfos = {
               username: user.username,
               email: user.email,

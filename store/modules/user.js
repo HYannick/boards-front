@@ -44,7 +44,6 @@ const actions = {
       [(payload.folderType === 'avatar') ? 'avatarUrl' : 'backgroundUrl']: uploadConfig.key
     })
 
-    console.log(uploadConfig)
     try {
       const config = {
         headers: {'Content-Type': payload.file.type}

@@ -80,7 +80,6 @@
       console.log('This is current swiper instance object', this.mySwiper)
     },
     updated() {
-      console.log('updated')
       this.mySwiper.init()
     }
   }

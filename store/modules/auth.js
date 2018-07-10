@@ -9,7 +9,6 @@ const state = {
 const mutations = {
   updateUser(state, data) {
     Object.assign(state.userInfos, data)
-    console.log(state.userInfos)
   },
   updateAuthStatus(state, data) {
     state.isLogged = true

@@ -53,7 +53,6 @@ async function pushtoS3(items, axios) {
 const mutations = {
   updateBookForm(state, data) {
     Object.assign(state.book_form, data)
-    console.log(state.book_form)
   },
   updateActiveStep(state, direction) {
     state.activeStep += (direction === 'up') ? 1 : -1
@@ -119,7 +118,6 @@ const actions = {
       } else if (item.name.includes('.cbz')) {
         specialExtension = 'application/cbz'
       }
-      console.log(specialExtension)
       const url = await this.$axios.$get(`http://localhost:5000/api/v1/upload?folder=book/${payload.name}&slug=${payload.slug}&contentType=${specialExtension || item.type}`)
       temp.push({file: item, ...url})
     })

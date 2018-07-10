@@ -119,7 +119,6 @@
         this.headline_form.background_cover = data.file
       },
       postCover(data) {
-        console.log(data.file)
         this.coverUrl = URL.createObjectURL(data.file);
         this.headline_form.cover = data.file
         this.noCover = false

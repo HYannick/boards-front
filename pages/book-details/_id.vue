@@ -107,7 +107,6 @@
     async mounted() {
       try {
         const book = await this.$axios.$get(`http://localhost:5000/api/v1/book/${this.$route.params.id}/details`)
-        console.log(book)
         const {title, img_title, tome_title, description, cover, background_cover, previews, min_price, max_price} = book
         this.headlines = {
           title,
